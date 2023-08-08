@@ -6,11 +6,17 @@ import { Map } from "./map";
 import { Snake } from "./snake";
 import { Food } from "./food";
 
-const player = new Player("Gosho", 0);
+const player = new Player();
 
 player.getUsername();
 
-const map = new Map();
-
 const food = new Food();
 const snake = new Snake();
+
+document.addEventListener("keydown", (e) => {
+  console.log("in move");
+  snake.moveSnake(e.code);
+
+  snake.snakeX += snake.moveX;
+  snake.snakeY += snake.moveY;
+});
