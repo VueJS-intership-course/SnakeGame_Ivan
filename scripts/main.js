@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import "../style.css";
+import "../styles/style.css";
 
 import { Player } from "./player";
 import { Map } from "./map";
