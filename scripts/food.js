@@ -14,7 +14,7 @@ export class Food {
 
   generateFood() {
     this.randomiseFoodPosition();
-    let htmlMarkup = `<div id="food" style="grid-area: ${this.foodY} / ${this.foodX}"></div>`;
-    this.board.innerHTML = htmlMarkup;
+    const foodMarkup = `<div id="food" style="grid-area: ${this.foodY} / ${this.foodX}"></div>`;
+    this.board.innerHTML = foodMarkup;
   }
 }

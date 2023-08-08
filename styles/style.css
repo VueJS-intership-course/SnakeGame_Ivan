@@ -75,8 +75,6 @@ button:focus-visible {
   background-color: #ff0000;
 }
 
-.snake-body {
-  z-index: 5;
-  position: relative;
+#snake {
   background: #00ff00;
 }

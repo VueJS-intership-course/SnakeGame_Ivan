@@ -12,6 +12,5 @@ player.getUsername();
 
 const map = new Map();
 
-const snake = new Snake();
-
 const food = new Food();
+const snake = new Snake();
