@@ -12,8 +12,8 @@ export class Food {
   }
 
   randomiseFoodPosition() {
-    this.foodX = Math.floor(Math.random() * 30) + 1;
-    this.foodY = Math.floor(Math.random() * 30) + 1;
+    this.foodX = Math.floor(Math.random() * 20) + 1;
+    this.foodY = Math.floor(Math.random() * 20) + 1;
   }
 
   initializeFood() {

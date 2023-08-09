@@ -21,9 +21,16 @@ export class Snake {
   }
 
   initializeSnake() {
-    const snakeMarkup = `<div id="snake" style="grid-area: ${this.snakeY} / ${this.snakeX}"></div>`;
     this.snakeBody[0] = [this.snakeY, this.snakeX];
+    const snakeMarkup = `<div id="snake" style="grid-area: ${this.snakeBody[0][0]} / ${this.snakeBody[0][1]}"></div>`;
     this.board.innerHTML += snakeMarkup;
+  }
+
+  addSnakeSegment() {
+    let i = this.snakeBody.length - 1;
+    const snakeSegment = `<div id="${i}" class="snake-body" style="grid-area: ${this.snakeBody[i][0]} / ${this.snakeBody[i][1]}"></div>`;
+
+    this.board.innerHTML += snakeSegment;
   }
 
   moveSnake(direction) {
@@ -47,8 +54,13 @@ export class Snake {
     this.snakeX += this.moveX;
     this.snakeY += this.moveY;
 
-    this.snakeBody[0] = [this.snakeY, this.snakeX];
+    for (let i = this.snakeBody.length - 1; i > 0; i--) {
+      this.snakeBody[i] = this.snakeBody[i - 1];
+      const snakeEl = document.getElementById(i);
+      snakeEl.style.gridArea = `${this.snakeBody[i][0]} / ${this.snakeBody[i][1]}`;
+    }
 
+    this.snakeBody[0] = [this.snakeY, this.snakeX];
     const snakeHead = document.getElementById("snake");
     snakeHead.style.gridArea = `${this.snakeY} / ${this.snakeX}`;
 
@@ -58,7 +70,9 @@ export class Snake {
   eatFood() {
     const [foodY, foodX] = [...food.foodLocation];
     if (foodY === this.snakeY && foodX === this.snakeX) {
+      this.snakeBody.push([foodY, foodX]);
       food.moveFood();
+      this.addSnakeSegment();
     }
   }
 }
