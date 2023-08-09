@@ -1,3 +1,4 @@
+import { Snake } from "./snake";
 export class Player {
   constructor(username, score) {
     this.username = username;
@@ -19,6 +20,14 @@ export class Player {
       } else {
         this.username = usernameInput.value;
         this.hideInputField();
+
+        //Initialize the snake after getting the username
+
+        const snake = new Snake();
+
+        document.addEventListener("keydown", (e) => {
+          snake.moveSnake(e.code);
+        });
       }
     });
   }

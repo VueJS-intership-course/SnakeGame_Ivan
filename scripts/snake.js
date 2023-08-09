@@ -1,6 +1,9 @@
+import { food } from "./food";
+
 export class Snake {
   snakeX;
   snakeY;
+  snakeBody = [];
   moveX;
   moveY;
   speed;
@@ -13,9 +16,14 @@ export class Snake {
     this.initializeSnake();
   }
 
+  get snakeBody() {
+    return this.snakeBody;
+  }
+
   initializeSnake() {
     const snakeMarkup = `<div id="snake" style="grid-area: ${this.snakeY} / ${this.snakeX}"></div>`;
-    this.board.innerHTML = snakeMarkup;
+    this.snakeBody[0] = [this.snakeY, this.snakeX];
+    this.board.innerHTML += snakeMarkup;
   }
 
   moveSnake(direction) {
@@ -34,6 +42,23 @@ export class Snake {
     } else {
       return;
     }
-    this.initializeSnake();
+
+    //Changing the coordinates of the snake
+    this.snakeX += this.moveX;
+    this.snakeY += this.moveY;
+
+    this.snakeBody[0] = [this.snakeY, this.snakeX];
+
+    const snakeHead = document.getElementById("snake");
+    snakeHead.style.gridArea = `${this.snakeY} / ${this.snakeX}`;
+
+    this.eatFood();
+  }
+
+  eatFood() {
+    const [foodY, foodX] = [...food.foodLocation];
+    if (foodY === this.snakeY && foodX === this.snakeX) {
+      food.moveFood();
+    }
   }
 }

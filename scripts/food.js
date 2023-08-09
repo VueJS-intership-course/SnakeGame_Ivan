@@ -4,7 +4,11 @@ export class Food {
   board = document.querySelector("#board");
 
   constructor() {
-    this.generateFood();
+    this.initializeFood();
+  }
+
+  get foodLocation() {
+    return [this.foodY, this.foodX];
   }
 
   randomiseFoodPosition() {
@@ -12,9 +16,21 @@ export class Food {
     this.foodY = Math.floor(Math.random() * 30) + 1;
   }
 
-  generateFood() {
+  initializeFood() {
     this.randomiseFoodPosition();
     const foodMarkup = `<div id="food" style="grid-area: ${this.foodY} / ${this.foodX}"></div>`;
-    this.board.innerHTML = foodMarkup;
+    this.board.innerHTML += foodMarkup;
+  }
+
+  moveFood() {
+    const foodEl = document.getElementById("food");
+
+    this.randomiseFoodPosition();
+
+    foodEl.style.gridArea = `${this.foodY} / ${this.foodX}`;
   }
 }
+
+const food = new Food();
+
+export { food };
