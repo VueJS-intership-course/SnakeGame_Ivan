@@ -1,8 +1,13 @@
 import { Snake } from "./snake";
 export class Player {
+  hasPlayer = false;
   constructor(username, score) {
     this.username = username;
     this.score = score;
+  }
+
+  get hasPlayer() {
+    return this.hasPlayer;
   }
 
   hideInputField() {
@@ -20,14 +25,14 @@ export class Player {
       } else {
         this.username = usernameInput.value;
         this.hideInputField();
-
+        this.hasPlayer = true;
         //Initialize the snake after getting the username
 
-        const snake = new Snake();
+        // const snake = new Snake();
 
-        document.addEventListener("keydown", (e) => {
-          snake.moveSnake(e.code);
-        });
+        // document.addEventListener("keydown", (e) => {
+        //   snake.moveSnake(e.code);
+        // });
       }
     });
   }

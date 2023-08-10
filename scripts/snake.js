@@ -6,7 +6,9 @@ export class Snake {
   snakeBody = [];
   moveX;
   moveY;
-  speed;
+  speed = 1;
+  _direction;
+  _lastDirection;
   board = document.querySelector("#board");
 
   constructor() {
@@ -18,6 +20,22 @@ export class Snake {
 
   get snakeBody() {
     return this.snakeBody;
+  }
+
+  set direction(value) {
+    this._direction = value;
+  }
+
+  get direction() {
+    return this._direction;
+  }
+
+  set lastDirection(value) {
+    this._lastDirection = value;
+  }
+
+  get lastDirection() {
+    return this._lastDirection;
   }
 
   initializeSnake() {
@@ -33,23 +51,38 @@ export class Snake {
     this.board.innerHTML += snakeSegment;
   }
 
-  moveSnake(direction) {
+  moveSnake() {
     this.checkOnSnake();
 
-    if (direction === "ArrowUp") {
-      this.moveX = 0;
-      this.moveY = -1;
-    } else if (direction === "ArrowDown") {
-      this.moveX = 0;
-      this.moveY = 1;
-    } else if (direction === "ArrowLeft") {
-      this.moveX = -1;
-      this.moveY = 0;
-    } else if (direction === "ArrowRight") {
-      this.moveX = 1;
-      this.moveY = 0;
-    } else {
-      return;
+    switch (this.direction) {
+      case "ArrowUp":
+        if (this.lastDirection === "ArrowDown") break;
+        this.moveX = 0;
+        this.moveY = -1;
+        this._lastDirection = "ArrowUp";
+        break;
+      case "ArrowDown":
+        if (this.lastDirection === "ArrowUp") break;
+        this.moveX = 0;
+        this.moveY = 1;
+        this._lastDirection = "ArrowDown";
+        break;
+      case "ArrowLeft":
+        if (this.lastDirection === "ArrowRight") break;
+
+        this.moveX = -1;
+        this.moveY = 0;
+        this._lastDirection = "ArrowLeft";
+
+        break;
+      case "ArrowRight":
+        if (this.lastDirection === "ArrowLeft") break;
+        this.moveX = 1;
+        this.moveY = 0;
+        this._lastDirection = "ArrowRight";
+        break;
+      default:
+        return;
     }
 
     //Changing the coordinates of the snake
@@ -77,6 +110,7 @@ export class Snake {
       this.snakeBody.push([foodY, foodX]);
       food.moveFood();
       this.addSnakeSegment();
+      this.speed++;
     }
   }
 
