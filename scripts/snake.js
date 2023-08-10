@@ -34,6 +34,8 @@ export class Snake {
   }
 
   moveSnake(direction) {
+    this.checkOnSnake();
+
     if (direction === "ArrowUp") {
       this.moveX = 0;
       this.moveY = -1;
@@ -54,12 +56,14 @@ export class Snake {
     this.snakeX += this.moveX;
     this.snakeY += this.moveY;
 
+    //Move snake body
     for (let i = this.snakeBody.length - 1; i > 0; i--) {
       this.snakeBody[i] = this.snakeBody[i - 1];
       const snakeEl = document.getElementById(i);
       snakeEl.style.gridArea = `${this.snakeBody[i][0]} / ${this.snakeBody[i][1]}`;
     }
 
+    //Moving the head of the snake
     this.snakeBody[0] = [this.snakeY, this.snakeX];
     const snakeHead = document.getElementById("snake");
     snakeHead.style.gridArea = `${this.snakeY} / ${this.snakeX}`;
@@ -73,6 +77,16 @@ export class Snake {
       this.snakeBody.push([foodY, foodX]);
       food.moveFood();
       this.addSnakeSegment();
+    }
+  }
+
+  checkOnSnake() {
+    const [foodY, foodX] = [...food.foodLocation];
+    for (let i = 0; i < this.snakeBody.length; i++) {
+      const [snakeY, snakeX] = [...this.snakeBody[i]];
+      if (snakeY === foodY && snakeX === foodX) {
+        food.moveFood();
+      }
     }
   }
 }
