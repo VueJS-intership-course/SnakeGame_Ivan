@@ -1,3 +1,5 @@
+import { snake } from "./snake";
+
 export class Food {
   foodX;
   foodY;
@@ -31,6 +33,4 @@ export class Food {
   }
 }
 
-const food = new Food();
-
-export { food };
+export const food = new Food();

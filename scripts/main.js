@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 import "../styles/style.css";
 
-import { Snake } from "./snake";
+import { snake } from "./snake";
 import { Player } from "./player";
 
 const player = new Player();
 
 player.getUsername();
 
-const snake = new Snake();
+// export const snake = new Snake();
 
 document.addEventListener("keydown", (e) => {
   snake.direction = e.code;

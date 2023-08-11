@@ -6,7 +6,7 @@ export class Snake {
   snakeBody = [];
   moveX;
   moveY;
-  speed = 1;
+  speed = 2;
   _direction;
   _lastDirection;
   board = document.querySelector("#board");
@@ -52,7 +52,7 @@ export class Snake {
   }
 
   moveSnake() {
-    this.checkOnSnake();
+    this.checkOnSnake(food.foodLocation);
 
     switch (this.direction) {
       case "ArrowUp":
@@ -89,6 +89,20 @@ export class Snake {
     this.snakeX += this.moveX;
     this.snakeY += this.moveY;
 
+    //Mirroring if it goes off the grid
+    if (this.snakeX > 20) {
+      this.snakeX = 1;
+    }
+    if (this.snakeX < 1) {
+      this.snakeX = 20;
+    }
+    if (this.snakeY > 20) {
+      this.snakeY = 1;
+    }
+    if (this.snakeY < 1) {
+      this.snakeY = 20;
+    }
+
     //Move snake body
     for (let i = this.snakeBody.length - 1; i > 0; i--) {
       this.snakeBody[i] = this.snakeBody[i - 1];
@@ -106,7 +120,7 @@ export class Snake {
 
   eatFood() {
     const [foodY, foodX] = [...food.foodLocation];
-    if (foodY === this.snakeY && foodX === this.snakeX) {
+    if (foodY === this.snakeBody[0][0] && foodX === this.snakeBody[0][1]) {
       this.snakeBody.push([foodY, foodX]);
       food.moveFood();
       this.addSnakeSegment();
@@ -114,13 +128,15 @@ export class Snake {
     }
   }
 
-  checkOnSnake() {
-    const [foodY, foodX] = [...food.foodLocation];
+  checkOnSnake(coordinates, type = food) {
+    const [cordY, cordX] = [...coordinates];
     for (let i = 0; i < this.snakeBody.length; i++) {
       const [snakeY, snakeX] = [...this.snakeBody[i]];
-      if (snakeY === foodY && snakeX === foodX) {
+      if (snakeY === cordY && snakeX === cordX) {
         food.moveFood();
       }
     }
   }
 }
+
+export const snake = new Snake();

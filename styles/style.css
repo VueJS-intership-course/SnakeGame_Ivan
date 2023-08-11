@@ -71,7 +71,7 @@ button:focus-visible {
 
 #snake {
   background: #00ff00;
-  border-radius: 5px;
+  border-radius: 8px;
   border: 1px solid black;
 }
 
