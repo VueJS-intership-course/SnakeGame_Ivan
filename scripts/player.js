@@ -1,6 +1,8 @@
 import { Snake } from "./snake";
 export class Player {
   hasPlayer = false;
+  // _hasDied = false;
+
   constructor(username, score) {
     this.username = username;
     this.score = score;
@@ -9,6 +11,14 @@ export class Player {
   get hasPlayer() {
     return this.hasPlayer;
   }
+
+  // get hasDied() {
+  //   return this._hasDied;
+  // }
+
+  // set hasDied(value) {
+  //   this._hasDied = value;
+  // }
 
   hideInputField() {
     const parentElement = document.getElementById("input-username-parent");
@@ -26,13 +36,6 @@ export class Player {
         this.username = usernameInput.value;
         this.hideInputField();
         this.hasPlayer = true;
-        //Initialize the snake after getting the username
-
-        // const snake = new Snake();
-
-        // document.addEventListener("keydown", (e) => {
-        //   snake.moveSnake(e.code);
-        // });
       }
     });
   }

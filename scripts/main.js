@@ -3,8 +3,9 @@ import "../styles/style.css";
 
 import { snake } from "./snake";
 import { Player } from "./player";
+import { controller } from "./controller";
 
-const player = new Player();
+export const player = new Player();
 
 player.getUsername();
 
@@ -18,6 +19,11 @@ let lastRenderTime = 0;
 
 function gameLoop(currentTime) {
   window.requestAnimationFrame(gameLoop);
+
+  if (controller.hasDied) {
+    alert("You have died!");
+    window.cancelAnimationFrame();
+  }
 
   const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
   if (secondsSinceLastRender < 1 / snake.speed) return;

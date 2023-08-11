@@ -1,4 +1,6 @@
 import { food } from "./food";
+import { controller } from "./controller";
+import { BOARD } from "../constants";
 
 export class Snake {
   snakeX;
@@ -9,7 +11,6 @@ export class Snake {
   speed = 2;
   _direction;
   _lastDirection;
-  board = document.querySelector("#board");
 
   constructor() {
     this.snakeX = 15;
@@ -41,18 +42,18 @@ export class Snake {
   initializeSnake() {
     this.snakeBody[0] = [this.snakeY, this.snakeX];
     const snakeMarkup = `<div id="snake" style="grid-area: ${this.snakeBody[0][0]} / ${this.snakeBody[0][1]}"></div>`;
-    this.board.innerHTML += snakeMarkup;
+    BOARD.innerHTML += snakeMarkup;
   }
 
   addSnakeSegment() {
     let i = this.snakeBody.length - 1;
     const snakeSegment = `<div id="${i}" class="snake-body" style="grid-area: ${this.snakeBody[i][0]} / ${this.snakeBody[i][1]}"></div>`;
 
-    this.board.innerHTML += snakeSegment;
+    BOARD.innerHTML += snakeSegment;
   }
 
   moveSnake() {
-    this.checkOnSnake(food.foodLocation);
+    this.checkFoodOnSnake(food.foodLocation);
 
     switch (this.direction) {
       case "ArrowUp":
@@ -115,6 +116,8 @@ export class Snake {
     const snakeHead = document.getElementById("snake");
     snakeHead.style.gridArea = `${this.snakeY} / ${this.snakeX}`;
 
+    this.checkBitItself(this.snakeBody[0]);
+
     this.eatFood();
   }
 
@@ -128,12 +131,22 @@ export class Snake {
     }
   }
 
-  checkOnSnake(coordinates, type = food) {
+  checkFoodOnSnake(coordinates) {
     const [cordY, cordX] = [...coordinates];
     for (let i = 0; i < this.snakeBody.length; i++) {
       const [snakeY, snakeX] = [...this.snakeBody[i]];
       if (snakeY === cordY && snakeX === cordX) {
         food.moveFood();
+      }
+    }
+  }
+
+  checkBitItself(coordinates) {
+    const [cordY, cordX] = [...coordinates];
+    for (let i = 1; i < this.snakeBody.length; i++) {
+      const [snakeY, snakeX] = [...this.snakeBody[i]];
+      if (snakeY === cordY && snakeX === cordX) {
+        controller.hasDied = true;
       }
     }
   }

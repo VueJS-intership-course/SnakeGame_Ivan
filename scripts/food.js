@@ -1,9 +1,9 @@
 import { snake } from "./snake";
+import { BOARD } from "../constants";
 
 export class Food {
   foodX;
   foodY;
-  board = document.querySelector("#board");
 
   constructor() {
     this.initializeFood();
@@ -21,7 +21,7 @@ export class Food {
   initializeFood() {
     this.randomiseFoodPosition();
     const foodMarkup = `<div id="food" style="grid-area: ${this.foodY} / ${this.foodX}"></div>`;
-    this.board.innerHTML += foodMarkup;
+    BOARD.innerHTML += foodMarkup;
   }
 
   moveFood() {
