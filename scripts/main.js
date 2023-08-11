@@ -22,7 +22,8 @@ function gameLoop(currentTime) {
 
   if (controller.hasDied) {
     alert("You have died!");
-    window.cancelAnimationFrame();
+
+    //Do some restart logic
   }
 
   const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
