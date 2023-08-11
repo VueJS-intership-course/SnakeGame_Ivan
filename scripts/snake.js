@@ -53,7 +53,7 @@ export class Snake {
   }
 
   moveSnake() {
-    this.checkFoodOnSnake(food.foodLocation);
+    this.checkOnSnake(food.foodLocation);
 
     switch (this.direction) {
       case "ArrowUp":
@@ -116,7 +116,9 @@ export class Snake {
     const snakeHead = document.getElementById("snake");
     snakeHead.style.gridArea = `${this.snakeY} / ${this.snakeX}`;
 
-    this.checkBitItself(this.snakeBody[0]);
+    // this.checkBitItself(this.snakeBody[0]);
+
+    this.checkOnSnake(this.snakeBody[0], "snake");
 
     this.eatFood();
   }
@@ -131,22 +133,12 @@ export class Snake {
     }
   }
 
-  checkFoodOnSnake(coordinates) {
+  checkOnSnake(coordinates, type = "food") {
     const [cordY, cordX] = [...coordinates];
-    for (let i = 0; i < this.snakeBody.length; i++) {
+    for (let i = type !== "food" ? 1 : 0; i < this.snakeBody.length; i++) {
       const [snakeY, snakeX] = [...this.snakeBody[i]];
       if (snakeY === cordY && snakeX === cordX) {
-        food.moveFood();
-      }
-    }
-  }
-
-  checkBitItself(coordinates) {
-    const [cordY, cordX] = [...coordinates];
-    for (let i = 1; i < this.snakeBody.length; i++) {
-      const [snakeY, snakeX] = [...this.snakeBody[i]];
-      if (snakeY === cordY && snakeX === cordX) {
-        controller.hasDied = true;
+        type === "snake" ? (controller.hasDied = true) : food.moveFood();
       }
     }
   }

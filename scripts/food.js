@@ -1,4 +1,3 @@
-import { snake } from "./snake";
 import { BOARD } from "../constants";
 
 export class Food {
