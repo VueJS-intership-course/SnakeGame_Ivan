@@ -1,17 +1,39 @@
 /* eslint-disable no-unused-vars */
-import "../style.css";
+import "../styles/style.css";
 
+import { snake } from "./snake";
 import { Player } from "./player";
-import { Map } from "./map";
-import { Snake } from "./snake";
-import { Food } from "./food";
+import { controller } from "./controller";
 
-const player = new Player("Gosho", 0);
+export const player = new Player();
 
 player.getUsername();
 
-const map = new Map();
+// export const snake = new Snake();
 
-const snake = new Snake();
+document.addEventListener("keydown", (e) => {
+  snake.direction = e.code;
+});
 
-const food = new Food();
+let lastRenderTime = 0;
+
+function gameLoop(currentTime) {
+  window.requestAnimationFrame(gameLoop);
+
+  if (controller.hasDied) {
+    alert("You have died!");
+
+    //Do some restart logic
+  }
+
+  const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
+  if (secondsSinceLastRender < 1 / snake.speed) return;
+
+  if (player.hasPlayer) {
+    snake.moveSnake(snake.direction);
+  }
+
+  lastRenderTime = currentTime;
+}
+
+window.requestAnimationFrame(gameLoop);
