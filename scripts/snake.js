@@ -41,15 +41,29 @@ export class Snake {
 
   initializeSnake() {
     this.snakeBody[0] = [this.snakeY, this.snakeX];
-    const snakeMarkup = `<div id="snake" style="grid-area: ${this.snakeBody[0][0]} / ${this.snakeBody[0][1]}"></div>`;
-    BOARD.innerHTML += snakeMarkup;
+    // const snakeMarkup = `<div id="snake" style="grid-area: ${this.snakeBody[0][0]} / ${this.snakeBody[0][1]}"></div>`;
+    // BOARD.innerHTML += snakeMarkup;
+
+    const snakeSegment = document.createElement("div");
+    snakeSegment.id = "snake";
+    snakeSegment.style.gridArea = `${this.snakeBody[0][0]} / ${this.snakeBody[0][1]}`;
+
+    BOARD.appendChild(snakeSegment);
   }
 
   addSnakeSegment() {
-    let i = this.snakeBody.length - 1;
-    const snakeSegment = `<div id="${i}" class="snake-body" style="grid-area: ${this.snakeBody[i][0]} / ${this.snakeBody[i][1]}"></div>`;
+    // let i = this.snakeBody.length - 1;
+    // const snakeSegment = `<div id="${i}" class="snake-body" style="grid-area: ${this.snakeBody[i][0]} / ${this.snakeBody[i][1]}"></div>`;
 
-    BOARD.innerHTML += snakeSegment;
+    // BOARD.innerHTML += snakeSegment;
+
+    let i = this.snakeBody.length - 1;
+    const snakeSegment = document.createElement("div");
+    snakeSegment.id = i;
+    snakeSegment.className = "snake-body";
+    snakeSegment.style.gridArea = `${this.snakeBody[i][0]} / ${this.snakeBody[i][1]}`;
+
+    BOARD.appendChild(snakeSegment);
   }
 
   moveSnake() {
